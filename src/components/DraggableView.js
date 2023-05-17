@@ -140,7 +140,8 @@ export default class DraggableView extends Component<Props> {
   panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: (evt, gestureState) => {
       const isAllowedDirection = d => (
-        this.currentSwipeDirection === d && this.allowedDirections.includes(d)
+        //this.currentSwipeDirection === d &&
+        this.allowedDirections.includes(d)
       );
       const {dx,dy} = gestureState;
       if(isAllowedDirection('up') && Math.abs(dx) < Math.abs(dy) && dy < -3) {
@@ -155,7 +156,7 @@ export default class DraggableView extends Component<Props> {
 
       return false;
     },
-    onStartShouldSetPanResponder: () => true,
+    onStartShouldSetPanResponder: () => false,
     onPanResponderMove: (event, gestureState) => {
       const isVerticalSwipe = d => ['up', 'down'].includes(d);
       const isHorizontalSwipe = d => ['left', 'right'].includes(d);
