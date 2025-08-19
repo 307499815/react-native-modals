@@ -108,7 +108,7 @@ class BaseModal extends Component<ModalProps, State> {
     if (this.props.visible) {
       this.show();
     }
-    BackHandler.addEventListener(HARDWARE_BACK_PRESS_EVENT, this.onHardwareBackPress);
+    this.backHandlerSub = BackHandler.addEventListener(HARDWARE_BACK_PRESS_EVENT, this.onHardwareBackPress);
   }
 
   componentDidUpdate(prevProps: ModalProps) {
@@ -122,7 +122,9 @@ class BaseModal extends Component<ModalProps, State> {
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener(HARDWARE_BACK_PRESS_EVENT, this.onHardwareBackPress);
+    if(this.backHandlerSub) {
+      this.backHandlerSub.remove();
+    }
   }
 
   onHardwareBackPress = (): boolean => this.props.onHardwareBackPress();
